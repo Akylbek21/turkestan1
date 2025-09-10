@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Заповедник-музей «Азрет-Султан» — Turkestan Guide</title>
+<link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<header>
+  <div class="container" style="display:flex;gap:10px;align-items:center">
+    <a href="../index.html" class="badge" style="text-decoration:none">← На главную</a>
+    <h1 id="title">Заповедник-музей «Азрет-Султан»</h1>
+  </div>
+</header>
+
+<img class="place-hero" alt="">
+<main class="main">
+  <div class="loc" id="loc"></div>
+  <p class="lead" id="lead"></p>
+
+  <div class="actions">
+    <button class="btn primary" id="mark" type="button">Был здесь</button>
+    <a class="btn" id="map" target="_blank" rel="noopener">Открыть в Google Maps</a>
+    <button class="btn" id="share" type="button">Поделиться</button>
+  </div>
+
+  <section class="section"><h3>Интересные факты</h3><ul id="facts"></ul></section>
+  <section class="section quiz"><h3>Проверь знания</h3><div id="quiz"></div><div class="actions"><button class="btn" id="check" type="button">Проверить</button></div></section>
+
+  <section class="recon" aria-label="Прошлое / сегодня"><div class="recon-head"><h3 style="margin:0">Прошлое / сегодня</h3><small class="muted">Проведите ползунок</small></div>
+    <div class="recon-wrap"><img class="recon-img" alt="Сегодня"><div class="recon-overlay"><img id="recon-then" alt="Прошлое"></div><input id="recon-slider" class="recon-slider" type="range" min="0" max="100" value="50"/></div>
+  </section>
+</main>
+
+<footer><div class="container">© <span id="y"></span> Turkestan Guide</div></footer>
+
+<script>
+window.PLACE = {
+  id:'azret-sultan',
+  name:'Заповедник-музей «Азрет-Султан»',
+  loc:'центр Туркестана',
+  category:'Музей',
+  img:'../img/azret-sultan.jpg',
+  lead:'Госзаповедник-музей (с 1978), 100+ археологических и архитектурных объектов вокруг комплекса Яссауи.',
+  facts:[
+    'Основан в 1978 году.',
+    'Включает крепостные стены и мавзолеи казахских ханов.',
+    'В 2003 году комплекс Яссауи включён в список ЮНЕСКО.'
+  ],
+  questions:[
+    {q:'Сколько типов объектов собраны в заповеднике?', a:['Археологические, архитектурные и исторические','Только археологические','Только музейные'], ok:0},
+    {q:'Год основания заповедника?', a:['1978','1991','2003'], ok:0}
+  ]
+};
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const P=window.PLACE||{}; const $=(s,r=document)=>r.querySelector(s);
+  const Y=$('#y'); Y&&(Y.textContent=new Date().getFullYear());
+  const title=$('#title'), loc=$('#loc'), lead=$('#lead'), facts=$('#facts'), quiz=$('#quiz'), mapA=$('#map');
+  const cover=$('.place-hero'); if(cover){ const src=P.img||('../img/'+(P.id||'placeholder')+'.webp'); cover.src=src; cover.alt=P.name||''; cover.onerror=()=>{cover.style.display='none'};}
+  title&&(title.textContent=P.name||'Без названия'); loc&&(loc.textContent=P.loc||''); lead&&(lead.textContent=P.lead||'');
+  if(facts && Array.isArray(P.facts)) facts.innerHTML=P.facts.map(t=>`<li>✅ ${esc(t)}</li>`).join('');
+  if(quiz && Array.isArray(P.questions)){ quiz.innerHTML=P.questions.map((q,i)=>`<div class="q" data-i="${i}"><h4 style="margin:0 0 6px">${esc(q.q)}</h4>${q.a.map((opt,idx)=>`<label style="display:block;margin:6px 0"><input type="radio" name="q${i}" value="${idx}"> ${esc(opt)}</label>`).join('')}<div class="muted res" style="margin-top:6px"></div></div>`).join('');
+    const btn=document.getElementById('check'); btn&&btn.addEventListener('click',()=>{ quiz.querySelectorAll('.q').forEach(box=>{ const i=+box.dataset.i, ok=(P.questions[i].ok|0); const picked=box.querySelector('input[type=radio]:checked'); const res=box.querySelector('.res'); if(!picked){res.textContent='Выберите вариант';return;} res.textContent=(+picked.value===ok)?'Верно! 🎉':'Неверно. Попробуйте ещё.';});});}
+  mapA&&(mapA.href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((P.name||'')+' '+(P.loc||''))}`);
+  const reconWrap=document.querySelector('.recon'); if(reconWrap) reconWrap.style.display='none'; // нет реконструкции
+  function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+});
+</script>
+
+<script src="../js/place-page.js" defer></script>
+</body>
+</html>

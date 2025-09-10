@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Turkestan Guide — места</title>
+  <link rel="stylesheet" href="css/main.css"/>
+  <!-- ВАЖНО: i18n.js грузим раньше shared.js -->
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/shared.js"></script>
+</head>
+<body>
+<header>
+  <div class="container" style="display:flex;align-items:center;gap:12px">
+    <h1>Достопримечательности Туркестанской области</h1>
+
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <a href="guide.html" class="badge" style="text-decoration:none">Гид</a>
+      <a href="passport.html" class="badge" style="text-decoration:none">Паспорт</a>
+
+      <!-- RU / KK -->
+      <div class="badge" style="cursor:pointer;display:flex;gap:6px;align-items:center">
+        <a href="#" data-lang="ru">RU</a> | <a href="#" data-lang="kk">KK</a>
+      </div>
+    </div>
+
+    <span class="badge" id="count-badge">0 мест</span>
+    <span class="passport" id="visited-badge" style="margin-left:auto">Посещено: 0</span>
+  </div>
+
+  <div class="container" style="display:grid;grid-template-columns:1fr 220px;gap:10px">
+    <label class="search"><input id="q" placeholder="Поиск: Яссауи, Отырар, Сауран…"></label>
+    <select id="cat" class="select" aria-label="Категория">
+      <!-- ДАЁМ ЯВНЫЕ value, чтобы при переводе фильтр оставался на RU -->
+      <option value="">Все категории</option>
+      <option value="Мавзолей">Мавзолей</option>
+      <option value="Мечеть">Мечеть</option>
+      <option value="Археология">Археология</option>
+      <option value="Музей">Музей</option>
+      <option value="Культура">Культура</option>
+      <option value="Сцена">Сцена</option>
+      <option value="Развлечения">Развлечения</option>
+      <option value="Парк">Парк</option>
+      <option value="Аттракцион">Аттракцион</option>
+      <option value="Природа">Природа</option>
+      <option value="Пещера">Пещера</option>
+      <option value="Инфраструктура">Инфраструктура</option>
+    </select>
+  </div>
+</header>
+
+<section class="grid" id="grid" aria-live="polite"></section>
+
+<footer>
+  <div class="container">
+    <div>© <span id="y"></span> Turkestan Guide — мультистраничная версия</div>
+    <div>HTML • CSS • JS</div>
+  </div>
+</footer>
+
+<script>
+/* ===== 1) ДАННЫЕ ===== */
+const PLACES = [
+  {id:'yasawi', title:'Мавзолей Ходжи Ахмеда Яссауи', location:'г. Туркестан', category:'Мавзолей'},
+  {id:'azret-sultan', title:'Заповедник-музей «Азрет-Султан»', location:'центр Туркестана', category:'Музей'},
+  {id:'rabia-sultan-begim', title:'Мавзолей Рабии Султан Бегим', location:'рядом с Яссауи', category:'Мавзолей'},
+  {id:'khilvet', title:'Подземная мечеть Хильвет', location:'«Азрет-Султан»', category:'Мечеть'},
+  {id:'esim-khan', title:'Мавзолей Есим хана', location:'«Азрет-Султан»', category:'Мавзолей'},
+  {id:'ethnoaul', title:'Этноаул', location:'г. Туркестан', category:'Культура'},
+  {id:'juma', title:'Джума-мечеть', location:'г. Туркестан', category:'Мечеть'},
+  {id:'regional-museum', title:'Историко-краеведческий музей', location:'г. Туркестан', category:'Музей'},
+  {id:'keruen-sarai', title:'Керуен Сарай', location:'новый город', category:'Культура'},
+  {id:'kultobe', title:'Городище Культобе', location:'исторический центр', category:'Археология'},
+  {id:'yasawi-museum', title:'Музей Х.А. Яссауи', location:'«Азрет-Султан»', category:'Музей'},
+  {id:'railway', title:'Железнодорожный вокзал', location:'г. Туркестан', category:'Инфраструктура'},
+  {id:'amphitheater', title:'Амфитеатр', location:'г. Туркестан', category:'Сцена'},
+  {id:'drama-theater', title:'Музыкально-драматический театр', location:'г. Туркестан', category:'Сцена'},
+  {id:'jibek-joly-park', title:'Парк аттракционов Jіbek Joly', location:'центр города', category:'Развлечения'},
+  {id:'flying-theater', title:'Летающий театр', location:'г. Туркестан', category:'Аттракцион'},
+  {id:'first-president-park', title:'Парк Первого Президента', location:'г. Туркестан', category:'Парк'},
+  {id:'gauhar-ana', title:'Мавзолей «Гаухар Ана»', location:'вблизи города', category:'Мавзолей'},
+  {id:'ukasha-ata', title:'Мавзолей и колодец Укаша Ата', location:'вблизи города', category:'Мавзолей'},
+  {id:'arystan-bab', title:'Мавзолей Арыстан-Баба', location:'~150 км от Туркестана', category:'Мавзолей'},
+  {id:'karatau-reserve', title:'Каратауский заповедник', location:'горы Каратау', category:'Природа'},
+  {id:'akmeshit-cave', title:'Пещера Акмешит', location:'~90 км от города', category:'Пещера'}
+];
+
+/* ===== 2) Утилиты ===== */
+function coverArt(title, a=200, b=320){
+  const svg=`<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'>
+    <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+      <stop stop-color='hsl(${a},80%,55%)'/><stop offset='1' stop-color='hsl(${b},80%,50%)'/></linearGradient></defs>
+    <rect fill='url(#g)' width='1200' height='800'/>
+    <text x='50%' y='54%' text-anchor='middle' font-size='70' font-family='Inter,Segoe UI,Arial'
+      fill='rgba(255,255,255,.92)' style='paint-order:stroke;stroke:#000;stroke-width:8'>${title.replace(/&/g,'&amp;')}</text>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+}
+
+/* Точечная подмена для нестандартного имени файла */
+const OVERRIDES = {
+  'yasawi': 'img/0_c280d24e5f3d7fa18e923992968ec42fe96ddde1e7abee1c0daa6b9e6b99320c.png.webp'
+};
+
+/* Последовательно пробует пути пока не загрузится */
+function resolveImageFor(id){
+  const custom = OVERRIDES[id] ? [OVERRIDES[id]] : [];
+  const candidates = [
+    `img/${id}.webp`, `img/${id}.jpg`, `img/${id}.jpeg`, `img/${id}.png`,
+    `img/places/${id}.webp`, `img/places/${id}.jpg`,
+    `img/places/${id}/cover.webp`, `img/places/${id}/cover.jpg`, `img/places/${id}/cover.png`
+  ];
+  return [...custom, ...candidates];
+}
+function tryLoadFirst(imgEl, title, id){
+  const list = resolveImageFor(id);
+  let i = 0;
+  const fallback = coverArt(title);
+  function tryNext(){
+    if(i >= list.length){ imgEl.src = fallback; return; }
+    const src = list[i++]; const test = new Image();
+    test.onload = ()=>{ imgEl.src = src; };
+    test.onerror = tryNext;
+    test.src = src;
+  }
+  tryNext();
+}
+
+/* ===== 3) Рендер ===== */
+const grid = document.getElementById('grid');
+const q = document.getElementById('q');
+const cat = document.getElementById('cat');
+document.getElementById('y').textContent = new Date().getFullYear();
+
+function cardNode(p){
+  const a = document.createElement('a');
+  a.className = 'card'; a.href = 'places/'+p.id+'.html'; a.target = '_blank'; a.rel='noopener';
+  a.innerHTML = `
+    <img alt="${p.title}" loading="lazy">
+    <div class="b">
+      <div class="loc">${p.location}</div>
+      <h3>${p.title}</h3>
+      <div class="loc"><span class="tag" data-ru="${p.category}">${p.category}</span></div>
+    </div>`;
+  const img = a.querySelector('img');
+  tryLoadFirst(img, p.title, p.id);
+  return a;
+}
+function render(list){
+  grid.innerHTML = '';
+  list.forEach(p => grid.appendChild(cardNode(p)));
+  document.getElementById('count-badge').textContent = list.length + ' мест';
+  updateVisitedBadge(list.length); // из shared.js, если подключён
+
+  // после рендера применяем переводы к свежим карточкам
+  if (window.I18N) I18N.updateIndexUI();
+}
+function apply(){
+  const s = (q.value||'').toLowerCase();
+  const c = cat.value;
+  render(PLACES.filter(p => (!s || (p.title+' '+p.location).toLowerCase().includes(s)) && (!c || p.category===c)));
+}
+q.addEventListener('input', ()=>setTimeout(apply,80));
+cat.addEventListener('change', apply);
+render(PLACES);
+
+/* ===== 4) i18n инициализация ===== */
+if (window.I18N){
+  I18N.init();
+  I18N.updateIndexUI();
+  I18N.onChange(()=>{ I18N.updateIndexUI(); });
+}
+</script>
+
+</body>
+</html>

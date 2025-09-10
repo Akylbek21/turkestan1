@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title><!-- НАЗВАНИЕ --> — Turkestan Guide</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <script defer src="../js/shared.js"></script>
+</head>
+<body>
+<header>
+  <div class="container" style="display:flex;align-items:center;gap:10px">
+    <a href="../index.html" class="badge" style="text-decoration:none">← На главную</a>
+    <h1><!-- НАЗВАНИЕ --></h1>
+    <span class="passport" id="visited-badge" style="margin-left:auto">Посещено: 0</span>
+  </div>
+</header>
+
+<img class="place-hero" alt="<!-- НАЗВАНИЕ -->" src=""
+     onerror="this.src=coverArt('<!-- НАЗВАНИЕ -->')">
+
+<main class="main">
+  <div class="loc"><!-- ЛОКАЦИЯ --> • <span class="tag"><!-- КАТЕГОРИЯ --></span></div>
+
+  <p class="lead">
+    <!-- 2–4 предложения описания -->
+  </p>
+
+  <div class="actions">
+    <button class="btn primary" id="mark">Был здесь</button>
+    <a class="btn" id="map" target="_blank" rel="noopener">Открыть в Google Maps</a>
+    <button class="btn" id="share">Поделиться</button>
+  </div>
+
+  <section class="section">
+    <h3>Интересные факты</h3>
+    <ul>
+      <li class="fact">Факт №1…</li>
+      <li class="fact">Факт №2…</li>
+      <li class="fact">Факт №3…</li>
+    </ul>
+  </section>
+
+  <section class="section quiz">
+    <h3>Проверь знания</h3>
+    <div class="q">
+      <div><b>Вопрос 1?</b></div>
+      <label style="display:block;margin-top:6px"><input type="radio" name="q0" value="0"> Вариант А</label>
+      <label style="display:block;margin-top:6px"><input type="radio" name="q0" value="1"> Вариант Б</label>
+      <label style="display:block;margin-top:6px"><input type="radio" name="q0" value="2"> Вариант В</label>
+      <div class="muted" id="res0"></div>
+    </div>
+    <div class="actions"><button class="btn" id="check">Проверить</button></div>
+  </section>
+
+  <!-- «Прошлое / сегодня» — ВНУТРИ страницы места -->
+  <section class="recon" aria-label="Историческая реконструкция">
+    <div class="recon-head">
+      <h3 style="margin:0">Прошлое / сегодня</h3>
+      <small class="muted">Проведите ползунок</small>
+    </div>
+    <div class="recon-wrap">
+      <img class="recon-img" alt="Сегодня" src="../img/now.jpg">
+      <div class="recon-overlay"><img id="recon-then" alt="Прошлое" src="../img/then.jpg"></div>
+      <input id="recon-slider" class="recon-slider" type="range" min="0" max="100" value="50" aria-label="Слайдер реконструкции"/>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div>© <span id="y"></span> Turkestan Guide</div><div>Статический сайт</div>
+  </div>
+</footer>
+
+<script>
+// ===== ЗАПОЛНИ ДАННЫЕ КОНКРЕТНОГО МЕСТА =====
+const PLACE_ID   = 'yasawi'; // уникальный id файла
+const PLACE_NAME = 'Мавзолей Ходжи Ахмеда Яссауи';
+const PLACE_LOC  = 'г. Туркестан';
+document.getElementById('y').textContent = new Date().getFullYear();
+
+// Паспорт
+function syncMark(){
+  const on = Passport.has(PLACE_ID);
+  document.getElementById('mark').textContent = on ? 'Убрать отметку' : 'Был здесь';
+  updateVisitedBadge(0); // на главной будет реальный total
+}
+document.getElementById('mark').addEventListener('click', ()=>{
+  const on = Passport.has(PLACE_ID);
+  if (on) Passport.unmark(PLACE_ID); else Passport.mark(PLACE_ID);
+  syncMark();
+});
+document.getElementById('share').addEventListener('click', ()=>{
+  navigator.clipboard?.writeText(location.href); alert('Ссылка скопирована');
+});
+document.getElementById('map').href =
+  "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(PLACE_NAME+" "+PLACE_LOC);
+syncMark();
+
+// Викторина — правильные ответы по индексам
+const ANSWERS = [0];
+document.getElementById('check').addEventListener('click', ()=>{
+  ANSWERS.forEach((ok,i)=>{
+    const sel = [...document.querySelectorAll(`input[name=q${i}]:checked`)].map(x=>+x.value)[0];
+    const r = document.getElementById('res'+i);
+    if (r) r.textContent = (sel===ok)? 'Верно!' : 'Неверно';
+  });
+});
+
+// Слайдер реконструкции
+const slider = document.getElementById('recon-slider');
+const thenImg = document.getElementById('recon-then');
+if (slider && thenImg){
+  slider.addEventListener('input', ()=>{
+    const right = 100 - parseInt(slider.value,10);
+    thenImg.style.clipPath = `inset(0 ${right}% 0 0)`;
+  });
+}
+</script>
+</body>
+</html>

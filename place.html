@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Место — Turkestan Guide</title>
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --bg1:#061727; --bg2:#0b1f3b; --grad1:#0ea5e9; --grad2:#22d3ee; --grad3:#10b981;
+    --card:#0d1524; --text:#eef2ff; --muted:#a5b4fc; --border:#233049;
+  }
+  *{box-sizing:border-box} html,body{height:100%}
+  body{
+    margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial; color:var(--text);
+    background:linear-gradient(180deg,var(--bg1),var(--bg2));
+  }
+  /* Global photo background (injected similarly to index) */
+  body::before{
+    content:""; position:fixed; inset:0;
+    background:url('img/yasawi-bg.webp') center/cover no-repeat; background-attachment:fixed;
+    filter:saturate(1.05) contrast(1.05) brightness(.65); z-index:-2;
+  }
+  body::after{
+    content:""; position:fixed; inset:0;
+    background:
+      radial-gradient(1000px 700px at 80% -10%, rgba(14,165,233,.18) 0%, transparent 60%),
+      radial-gradient(900px 700px at -10% 10%, rgba(16,185,129,.16) 0%, transparent 60%),
+      linear-gradient(180deg, rgba(6,23,39,.65), rgba(11,31,59,.75));
+    z-index:-1;
+  }
+  header{position:sticky; top:0; backdrop-filter:blur(8px); background:rgba(14,165,233,.14); border-bottom:1px solid var(--border)}
+  .wrap{max-width:1000px; margin:0 auto; padding:18px}
+  h1{margin:6px 0 8px; font-size:clamp(22px,3.6vw,34px);
+     background:linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3));
+     -webkit-background-clip:text; background-clip:text; color:transparent}
+  .grid{display:grid; grid-template-columns: 1.1fr .9fr; gap:16px}
+  .hero{border:1px solid var(--border); border-radius:16px; overflow:hidden; background:rgba(13,21,36,.6)}
+  .hero img{display:block; width:100%; height:360px; object-fit:cover}
+  .card{border:1px solid var(--border); border-radius:16px; background:rgba(13,21,36,.7); padding:14px}
+  .loc{color:var(--muted); font-size:13px}
+  .desc{line-height:1.7; color:#e7edff}
+  h2{margin:12px 0 8px; color:#c9d5ff}
+  ul{margin:8px 0 0 18px}
+  .chip{display:inline-block; padding:4px 8px; border-radius:999px; border:1px solid var(--border); font-size:12px; color:#dbeafe}
+  .btn{all:unset; cursor:pointer; padding:10px 12px; border-radius:12px;
+       background:linear-gradient(90deg,var(--grad1),var(--grad3)); color:#05201a; font-weight:600}
+  .row{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+  .qa{display:grid; gap:10px}
+  .qcard{border:1px solid var(--border); border-radius:14px; padding:12px; background:#0c1323}
+  .opts{display:grid; gap:6px; margin-top:6px}
+  label.opt{display:flex; gap:8px; align-items:flex-start; cursor:pointer}
+  .score{margin-top:6px; color:#93c5fd}
+  @media (max-width:840px){ .grid{grid-template-columns:1fr} .hero img{height:260px} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; gap:12px">
+    <h1 id="title">Загрузка…</h1>
+    <div class="row">
+      <a class="btn" href="index.html" target="_self">← На главную</a>
+      <button class="btn" id="print">Печать / PDF</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+    <div class="hero"><img id="cover" alt=""></div>
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <span class="chip" id="category"></span>
+        <span class="loc" id="location"></span>
+      </div>
+      <p class="desc" id="desc"></p>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" id="map">Открыть на карте</button>
+        <button class="btn" id="qr">QR</button>
+      </div>
+      <div id="qrwrap" style="display:none; margin-top:10px"></div>
+    </div>
+  </div>
+
+  <section class="card" style="margin-top:16px">
+    <h2>Интересные факты</h2>
+    <ul id="facts"></ul>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2>Проверь себя</h2>
+    <div class="qa" id="quiz"></div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn" id="check">Проверить ответы</button>
+      <div class="score" id="score"></div>
+    </div>
+  </section>
+</main>
+
+<script src="data.js"></script>
+<script>
+function getParam(name){ const url = new URL(location.href); return url.searchParams.get(name); }
+function coverArt(title){
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'>
+  <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+    <stop stop-color='#0ea5e9'/><stop offset='1' stop-color='#10b981'/>
+  </linearGradient></defs>
+  <rect fill='url(#g)' width='1200' height='800'/>
+  <text x='50%' y='54%' text-anchor='middle' font-size='70' font-family='Inter,Segoe UI,Arial' fill='rgba(255,255,255,.92)'
+    style='paint-order:stroke; stroke:#000; stroke-width:8'>${title.replace(/&/g,'&amp;')}</text></svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+const id = getParam('id');
+const place = (window.PLACES||[]).find(p => p.id === id);
+if(!place){ document.getElementById('title').textContent = 'Место не найдено'; }
+else{
+  document.getElementById('title').textContent = place.title;
+  document.getElementById('cover').src = place.img && place.img.trim()? place.img : coverArt(place.title);
+  document.getElementById('cover').alt = place.title;
+  document.getElementById('category').textContent = place.category;
+  document.getElementById('location').textContent = place.location;
+  document.getElementById('desc').textContent = place.long || place.short;
+
+  // Map & QR
+  document.getElementById('map').onclick = () => {
+    const q = encodeURIComponent(`${place.title} ${place.location}`);
+    window.open(`https://www.google.com/maps/search/?api=1&query=${q}`, '_blank');
+  };
+  const qrWrap = document.getElementById('qrwrap');
+  document.getElementById('qr').onclick = () => {
+    const url = location.href;
+    const qrsrc = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(url)}`;
+    qrWrap.style.display='block';
+    qrWrap.innerHTML = `<div class="loc">QR этой страницы:</div><img alt="QR" width="240" height="240" src="${qrsrc}"/>
+    <div class="loc" style="margin-top:6px; word-break:break-all">${url}</div>`;
+  };
+
+  // Facts
+  const facts = (window.FACTS&&window.FACTS[id]) || [
+    'Категория: ' + place.category,
+    'Локация: ' + place.location,
+    'Совет: сделайте фото у знаковой точки и отметьте на карте!'
+  ];
+  const ul = document.getElementById('facts');
+  facts.forEach(f=>{ const li=document.createElement('li'); li.textContent=f; ul.appendChild(li); });
+
+  // Quiz
+  const qs = (window.QUIZ&&window.QUIZ[id]) || [
+    {q:'К какой категории относится это место?', options:[place.category, 'Музей', 'Природа'], a:0},
+    {q:'В каком населенном пункте расположено место?', options:[place.location, 'Алматы', 'Шымкент'], a:0}
+  ];
+  const quizEl = document.getElementById('quiz');
+  qs.forEach((item, qi)=>{
+    const card = document.createElement('div'); card.className='qcard';
+    const q = document.createElement('div'); q.textContent = (qi+1)+'. '+item.q; card.appendChild(q);
+    const opts = document.createElement('div'); opts.className='opts';
+    item.options.forEach((opt, oi)=>{
+      const idd = `q${qi}_o${oi}`;
+      const lab = document.createElement('label'); lab.className='opt';
+      lab.innerHTML = `<input type="radio" name="q${qi}" id="${idd}" value="${oi}"> <span>${opt}</span>`;
+      opts.appendChild(lab);
+    });
+    card.appendChild(opts); quizEl.appendChild(card);
+  });
+  document.getElementById('check').onclick = () => {
+    let correct=0;
+    qs.forEach((item, qi)=>{
+      const sel = document.querySelector(`input[name="q${qi}"]:checked`);
+      if(sel && parseInt(sel.value,10) === item.a) correct++;
+    });
+    document.getElementById('score').textContent = `Верно: ${correct} из ${qs.length}`;
+  };
+}
+
+document.getElementById('print').onclick = ()=> window.print();
+</script>
+</body>
+</html>
