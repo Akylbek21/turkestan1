@@ -1,15 +1,18 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Гид по Туркестану — что посмотреть</title>
+  <title>Turkestan Guide — what to see</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="css/main.css"/>
-  <!-- i18n: подключаем до разметки, чтобы сразу проставлялся lang -->
+
+  <!-- Force default language to EN; works together with your i18n.js -->
+  <script>try{localStorage.setItem('lang','en');}catch(e){}</script>
   <script defer src="js/i18n.js"></script>
+
   <style>
-    /* ===== Guide — тонкие доп.стили под Sunset Glass+ ===== */
+    /* ===== Guide — thin extras for Sunset Glass+ ===== */
     .wrap{max-width:900px; margin:0 auto; padding:18px}
     h1{
       margin:6px 0 8px; font-size:clamp(22px,3.6vw,34px);
@@ -19,7 +22,7 @@
     h2{margin:24px 0 8px; color:var(--muted)}
     p{line-height:1.75; color:#f6f9ff}
 
-    /* оглавление как стеклянная карточка */
+    /* TOC as a glass card */
     .toc{
       display:grid; gap:8px; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
       background: var(--surface-2);
@@ -44,122 +47,118 @@
 <body>
   <header>
     <div class="wrap row" style="gap:8px">
-      <h1 id="g-title">Гид по Туркестану — что посмотреть</h1>
+      <h1 id="g-title">Turkestan Guide — what to see</h1>
 
       <div class="row" style="gap:8px; margin-left:auto">
-        <!-- переключатель языков -->
+        <!-- language switcher: EN / KK -->
         <div class="badge" style="cursor:pointer;display:flex;gap:6px;align-items:center">
-          <a href="#" data-lang="ru">RU</a> |
-          <a href="#" data-lang="kk">KK</a> |
-          <a href="#" data-lang="en">EN</a>
+          <a href="#" data-lang="en" class="active">EN</a> |
+          <a href="#" data-lang="kk">KK</a>
         </div>
 
-        <a class="btn primary" id="g-back" href="index.html">← На главную</a>
-        <button class="btn" id="g-print" type="button" onclick="window.print()">Печать / PDF</button>
+        <a class="btn primary" id="g-back" href="index.html">← Home</a>
+        <button class="btn" id="g-print" type="button" onclick="window.print()">Print / PDF</button>
       </div>
     </div>
   </header>
 
   <main class="wrap">
-    <!-- оглавление — тексты линков будем подменять через I18N -->
+    <!-- TOC — link texts are English by default; i18n will swap on language change -->
     <div class="toc" id="toc">
-      <a href='#что-посмотреть-и-куда-сходить-в-туркестане'   data-i18n="toc_overview">Что посмотреть и куда сходить в Туркестане</a>
-      <a href='#заповедник-музей-азрет-султан'                 data-i18n="toc_azret">Заповедник-музей «Азрет-Султан»</a>
-      <a href='#мавзолей-ходжи-ахмеда-яссауи'                  data-i18n="toc_yassawi">Мавзолей Ходжи Ахмеда Яссауи</a>
-      <a href='#мавзолей-рабии-султан-бегим'                   data-i18n="toc_rabia">Мавзолей Рабии Султан Бегим</a>
-      <a href='#подземная-мечеть-хильвет'                      data-i18n="toc_khilvet">Подземная мечеть Хильвет</a>
-      <a href='#мавзолей-есим-хана'                            data-i18n="toc_esim">Мавзолей Есим хана</a>
-      <a href='#этноаул'                                       data-i18n="toc_ethno">Этноаул</a>
-      <a href='#джума-мечеть'                                  data-i18n="toc_juma">Джума-мечеть</a>
-      <a href='#туркестанский-областной-историко-краеведческий-музей' data-i18n="toc_regmuseum">Областной историко-краеведческий музей</a>
-      <a href='#керуен-сарай-караван-сарай'                    data-i18n="toc_keruen">Керуен Сарай (Караван Сарай)</a>
-      <a href='#городище-культобе'                             data-i18n="toc_kultobe">Городище Культобе</a>
-      <a href='#музей-ходжа-ахмет-яссауи'                      data-i18n="toc_yassawi_museum">Музей Ходжа Ахмет Яссауи</a>
-      <a href='#здание-железнодорожного-вокзала'               data-i18n="toc_station">Здание железнодорожного вокзала</a>
-      <a href='#амфитеатр'                                     data-i18n="toc_amphi">Амфитеатр</a>
-      <a href='#казахский-музыкально-драматический-театр'      data-i18n="toc_theatre">Казахский музыкально-драматический театр</a>
-      <a href='#парк-аттракционов-j-bek-joly'                  data-i18n="toc_park">Парк аттракционов Jіbek Joly</a>
-      <a href='#летающий-театр'                                data-i18n="toc_flying">Летающий театр</a>
-      <a href='#парк-первого-президента'                       data-i18n="toc_firstpark">Парк Первого Президента</a>
-      <a href='#что-посмотреть-вблизи-туркестана'              data-i18n="toc_near">Что посмотреть вблизи Туркестана</a>
-      <a href='#мавзолей-гаухар-ана-святыня-с-источником-целебной-воды' data-i18n="toc_gauhar">Мавзолей «Гаухар Ана»</a>
-      <a href='#мавзолей-и-колодец-укаша-ата-священный-колодец-глубиной-22-м-и-легенда-о-сподвижнике' data-i18n="toc_ukasha">Укаша Ата</a>
-      <a href='#мавзолей-арыстан-баба-наставник-яссауи-традиционный-пункт-паломничества-рядом-источник' data-i18n="toc_arystan">Мавзолей Арыстан-Баба</a>
-      <a href='#каратауский-государственный-заповедник-ландшафты-редкие-виды-маршруты-хайкинга' data-i18n="toc_karatau">Каратауский заповедник</a>
-      <a href='#пещера-акмешит-огромный-купол-150-30-м-прохладно-даже-летом' data-i18n="toc_akmeshit">Пещера Акмешит</a>
+      <a href="#что-посмотреть-и-куда-сходить-в-туркестане"   data-i18n="toc_overview">Highlights in Turkestan</a>
+      <a href="#заповедник-музей-азрет-султан"                 data-i18n="toc_azret">Azret Sultan Reserve-Museum</a>
+      <a href="#мавзолей-ходжи-ахмеда-яссауи"                  data-i18n="toc_yassawi">Mausoleum of Khoja Ahmed Yasawi</a>
+      <a href="#мавзолей-рабии-султан-бегим"                   data-i18n="toc_rabia">Mausoleum of Rabia Sultan Begim</a>
+      <a href="#подземная-мечеть-хильвет"                      data-i18n="toc_khilvet">Underground Mosque Khilvet</a>
+      <a href="#мавзолей-есим-хана"                            data-i18n="toc_esim">Mausoleum of Esim Khan</a>
+      <a href="#этноаул"                                       data-i18n="toc_ethno">Ethno-village</a>
+      <a href="#джума-мечеть"                                  data-i18n="toc_juma">Juma Mosque</a>
+      <a href="#туркестанский-областной-историко-краеведческий-музей" data-i18n="toc_regmuseum">Regional History Museum</a>
+      <a href="#керуен-сарай-караван-сарай"                    data-i18n="toc_keruen">Keruen Sarai</a>
+      <a href="#городище-культобе"                             data-i18n="toc_kultobe">Kultobe Settlement</a>
+      <a href="#музей-ходжа-ахмет-яссауи"                      data-i18n="toc_yassawi_museum">Khoja Ahmed Yasawi Museum</a>
+      <a href="#здание-железнодорожного-вокзала"               data-i18n="toc_station">Railway Station Building</a>
+      <a href="#амфитеатр"                                     data-i18n="toc_amphi">Amphitheatre</a>
+      <a href="#казахский-музыкально-драматический-театр"      data-i18n="toc_theatre">Kazakh Music & Drama Theatre</a>
+      <a href="#парк-аттракционов-j-bek-joly"                  data-i18n="toc_park">Jіbek Joly Amusement Park</a>
+      <a href="#летающий-театр"                                data-i18n="toc_flying">Flying Theatre</a>
+      <a href="#парк-первого-президента"                       data-i18n="toc_firstpark">First President Park</a>
+      <a href="#что-посмотреть-вблизи-туркестана"              data-i18n="toc_near">Day trips near Turkestan</a>
+      <a href="#мавзолей-гаухар-ана-святыня-с-источником-целебной-воды" data-i18n="toc_gauhar">Gauhar Ana Mausoleum</a>
+      <a href="#мавзолей-и-колодец-укаша-ата-священный-колодец-глубиной-22-м-и-легенда-о-сподвижнике" data-i18n="toc_ukasha">Ukasha Ata</a>
+      <a href="#мавзолей-арыстан-баба-наставник-яссауи-традиционный-пункт-паломничества-рядом-источник" data-i18n="toc_arystan">Arystan Bab Mausoleum</a>
+      <a href="#каратауский-государственный-заповедник-ландшафты-редкие-виды-маршруты-хайкинга" data-i18n="toc_karatau">Karatau Nature Reserve</a>
+      <a href="#пещера-акмешит-огромный-купол-150-30-м-прохладно-даже-летом" data-i18n="toc_akmeshit">Akmeshit Cave</a>
     </div>
 
-    <!-- далее ваш контент (пока на RU). Можно позже добавить EN/KK версии текста -->
-    <!-- ... текущее содержимое из вашего файла ... -->
+    <!-- your content sections go here -->
 
     <p style="margin-top:24px;color:var(--muted)" id="g-note">
-      Материал подготовлен для школьного проекта. Изображения будут обновляться по мере предоставления.
+      This material was prepared for a school project. Images will be updated as they become available.
     </p>
   </main>
 
   <script>
-  // Локальный словарь для шапки и оглавления (RU/KK/EN)
+  // Local dictionary for header/TOC (EN default, KK optional)
   const G_I18N = {
-    title: { ru:'Гид по Туркестану — что посмотреть', kk:'Түркістанға гид — не көруге болады', en:'Turkestan Guide — what to see' },
-    back:  { ru:'← На главную', kk:'← Басты бетке', en:'← Home' },
-    print: { ru:'Печать / PDF', kk:'Басып шығару / PDF', en:'Print / PDF' },
+    title: { en:'Turkestan Guide — what to see', kk:'Түркістанға гид — не көруге болады' },
+    back:  { en:'← Home', kk:'← Басты бетке' },
+    print: { en:'Print / PDF', kk:'Басып шығару / PDF' },
     note:  {
-      ru:'Материал подготовлен для школьного проекта. Изображения будут обновляться по мере предоставления.',
-      kk:'Материал мектеп жобасы үшін дайындалды. Суреттер берілген сайын жаңартылады.',
-      en:'This material was prepared for a school project. Images will be updated as they become available.'
+      en:'This material was prepared for a school project. Images will be updated as they become available.',
+      kk:'Материал мектеп жобасы үшін дайындалды. Суреттер берілген сайын жаңартылады.'
     },
     toc: {
-      toc_overview:{ru:'Что посмотреть и куда сходить в Туркестане', kk:'Түркістанда не көруге болады', en:'Highlights in Turkestan'},
-      toc_azret:{ru:'Заповедник-музей «Азрет-Султан»', kk:'«Әзірет Сұлтан» музей-қорығы', en:'Azret Sultan Reserve-Museum'},
-      toc_yassawi:{ru:'Мавзолей Ходжи Ахмеда Яссауи', kk:'Қожа Ахмет Ясауи кесенесі', en:'Mausoleum of Khoja Ahmed Yasawi'},
-      toc_rabia:{ru:'Мавзолей Рабии Султан Бегим', kk:'Рабиға Сұлтан Бегім кесенесі', en:'Mausoleum of Rabia Sultan Begim'},
-      toc_khilvet:{ru:'Подземная мечеть Хильвет', kk:'Жерасты мешіті Хилуат', en:'Underground Mosque Khilvet'},
-      toc_esim:{ru:'Мавзолей Есим хана', kk:'Есім хан кесенесі', en:'Mausoleum of Esim Khan'},
-      toc_ethno:{ru:'Этноаул', kk:'Этноауыл', en:'Ethno-village'},
-      toc_juma:{ru:'Джума-мечеть', kk:'Жұма мешіті', en:'Juma Mosque'},
-      toc_regmuseum:{ru:'Областной историко-краеведческий музей', kk:'Облыстық тарихи-өлкетану музейі', en:'Regional History Museum'},
-      toc_keruen:{ru:'Керуен Сарай (Караван Сарай)', kk:'Керуен Сарай', en:'Keruen Sarai'},
-      toc_kultobe:{ru:'Городище Культобе', kk:'Күлтөбе қалашығы', en:'Kultobe Settlement'},
-      toc_yassawi_museum:{ru:'Музей Ходжа Ахмет Яссауи', kk:'Қожа Ахмет Ясауи музейі', en:'Khoja Ahmed Yasawi Museum'},
-      toc_station:{ru:'Здание железнодорожного вокзала', kk:'Теміржол вокзалы', en:'Railway Station Building'},
-      toc_amphi:{ru:'Амфитеатр', kk:'Амфитеатр', en:'Amphitheatre'},
-      toc_theatre:{ru:'Казахский музыкально-драматический театр', kk:'Қазақ музыкалық-драма театры', en:'Kazakh Music & Drama Theatre'},
-      toc_park:{ru:'Парк аттракционов Jіbek Joly', kk:'Jіbek Joly ойын-сауық паркі', en:'Jіbek Joly Amusement Park'},
-      toc_flying:{ru:'Летающий театр', kk:'Ұшатын театр', en:'Flying Theatre'},
-      toc_firstpark:{ru:'Парк Первого Президента', kk:'Тұңғыш Президент саябағы', en:'First President Park'},
-      toc_near:{ru:'Что посмотреть вблизи Туркестана', kk:'Түркістан маңында не көруге болады', en:'Day trips near Turkestan'},
-      toc_gauhar:{ru:'Мавзолей «Гаухар Ана»', kk:'«Гауһар Ана» кесенесі', en:'Gauhar Ana Mausoleum'},
-      toc_ukasha:{ru:'Укаша Ата', kk:'Ұқаша Ата', en:'Ukasha Ata'},
-      toc_arystan:{ru:'Мавзолей Арыстан-Баба', kk:'Арыстан-Баб кесенесі', en:'Arystan Bab Mausoleum'},
-      toc_karatau:{ru:'Каратауский заповедник', kk:'Қаратау қорығы', en:'Karatau Nature Reserve'},
-      toc_akmeshit:{ru:'Пещера Акмешит', kk:'Ақмешіт үңгірі', en:'Akmeshit Cave'}
+      toc_overview:{en:'Highlights in Turkestan', kk:'Түркістанда не көруге болады'},
+      toc_azret:{en:'Azret Sultan Reserve-Museum', kk:'«Әзірет Сұлтан» музей-қорығы'},
+      toc_yassawi:{en:'Mausoleum of Khoja Ahmed Yasawi', kk:'Қожа Ахмет Ясауи кесенесі'},
+      toc_rabia:{en:'Mausoleum of Rabia Sultan Begim', kk:'Рабиға Сұлтан Бегім кесенесі'},
+      toc_khilvet:{en:'Underground Mosque Khilvet', kk:'Жерасты мешіті Хилуат'},
+      toc_esim:{en:'Mausoleum of Esim Khan', kk:'Есім хан кесенесі'},
+      toc_ethno:{en:'Ethno-village', kk:'Этноауыл'},
+      toc_juma:{en:'Juma Mosque', kk:'Жұма мешіті'},
+      toc_regmuseum:{en:'Regional History Museum', kk:'Облыстық тарихи-өлкетану музейі'},
+      toc_keruen:{en:'Keruen Sarai', kk:'Керуен Сарай'},
+      toc_kultobe:{en:'Kultobe Settlement', kk:'Күлтөбе қалашығы'},
+      toc_yassawi_museum:{en:'Khoja Ahmed Yasawi Museum', kk:'Қожа Ахмет Ясауи музейі'},
+      toc_station:{en:'Railway Station Building', kk:'Теміржол вокзалы'},
+      toc_amphi:{en:'Amphitheatre', kk:'Амфитеатр'},
+      toc_theatre:{en:'Kazakh Music & Drama Theatre', kk:'Қазақ музыкалық-драма театры'},
+      toc_park:{en:'Jіbek Joly Amusement Park', kk:'Jіbek Joly ойын-сауық паркі'},
+      toc_flying:{en:'Flying Theatre', kk:'Ұшатын театр'},
+      toc_firstpark:{en:'First President Park', kk:'Тұңғыш Президент саябағы'},
+      toc_near:{en:'Day trips near Turkestan', kk:'Түркістан маңында не көруге болады'},
+      toc_gauhar:{en:'Gauhar Ana Mausoleum', kk:'«Гауһар Ана» кесенесі'},
+      toc_ukasha:{en:'Ukasha Ata', kk:'Ұқаша Ата'},
+      toc_arystan:{en:'Arystan Bab Mausoleum', kk:'Арыстан-Баб кесенесі'},
+      toc_karatau:{en:'Karatau Nature Reserve', kk:'Қаратау қорығы'},
+      toc_akmeshit:{en:'Akmeshit Cave', kk:'Ақмешіт үңгірі'}
     }
   };
 
   function updateGuideUI(){
-    const lang = (window.I18N && I18N.get && I18N.get()) || 'ru';
-    // заголовок/кнопки/примечание
-    const t = G_I18N;
-    const by = (obj)=> (obj && (obj[lang] ?? obj['ru'])) || '';
+    const lang = (window.I18N && I18N.get && I18N.get()) || 'en';
+    const by = (obj)=> (obj && (obj[lang] ?? obj['en'])) || '';
     const $ = (s, r=document)=> r.querySelector(s);
 
-    const gTitle = $('#g-title'); if(gTitle) gTitle.textContent = by(t.title);
-    const gBack  = $('#g-back');  if(gBack)  gBack.textContent  = by(t.back);
-    const gPrint = $('#g-print'); if(gPrint) gPrint.textContent = by(t.print);
-    const gNote  = $('#g-note');  if(gNote)  gNote.textContent  = by(t.note);
+    $('#g-title') && ($('#g-title').textContent = by(G_I18N.title));
+    $('#g-back')  && ($('#g-back').textContent  = by(G_I18N.back));
+    $('#g-print') && ($('#g-print').textContent = by(G_I18N.print));
+    $('#g-note')  && ($('#g-note').textContent  = by(G_I18N.note));
 
-    // оглавление
     document.querySelectorAll('#toc [data-i18n]').forEach(a=>{
       const key = a.getAttribute('data-i18n');
-      const dict = t.toc[key];
+      const dict = G_I18N.toc[key];
       if(dict){ a.textContent = by(dict); }
     });
 
-    // атрибут lang документа
     document.documentElement.setAttribute('lang', lang);
+    // highlight active toggle, if present
+    document.querySelectorAll('[data-lang]').forEach(x=>{
+      x.classList.toggle('active', x.getAttribute('data-lang')===lang);
+    });
   }
 
-  // инициализация
   document.addEventListener('DOMContentLoaded', ()=>{
     if (window.I18N && I18N.init){ I18N.init(); }
     updateGuideUI();
