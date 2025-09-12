@@ -1,41 +1,191 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Мавзолей «Гаухар Ана» — Turkestan Guide</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title id="doc-title">Place — Turkestan Guide</title>
 <link rel="stylesheet" href="../css/main.css"/>
 </head>
 <body>
-<header><div class="container" style="display:flex;gap:10px;align-items:center">
-  <a href="../index.html" class="badge" style="text-decoration:none">← На главную</a>
-  <h1 id="title">Мавзолей «Гаухар Ана»</h1>
-</div></header>
+<header>
+  <div class="container" style="display:flex;gap:10px;align-items:center">
+    <a href="../index.html" class="badge" style="text-decoration:none">← Home</a>
+    <h1 id="title">Place</h1>
+  </div>
+</header>
 
 <img class="place-hero" alt="">
 <main class="main">
-  <div class="loc" id="loc"></div><p class="lead" id="lead"></p>
+  <div class="loc" id="loc"></div>
+  <p class="lead" id="lead"></p>
 
   <div class="actions">
-    <button class="btn primary" id="mark" type="button">Был здесь</button>
-    <a class="btn" id="map" target="_blank" rel="noopener">Открыть в Google Maps</a>
-    <button class="btn" id="share" type="button">Поделиться</button>
+    <button class="btn primary" id="mark" type="button">I was here</button>
+    <a class="btn" id="map" target="_blank" rel="noopener">Open in Google Maps</a>
+    <button class="btn" id="share" type="button">Share</button>
   </div>
 
-  <section class="section"><h3>Интересные факты</h3><ul id="facts"></ul></section>
-  <section class="section quiz"><h3>Проверь знания</h3><div id="quiz"></div><div class="actions"><button class="btn" id="check" type="button">Проверить</button></div></section>
-  <section class="recon" aria-label="Прошлое / сегодня"><div class="recon-head"><h3 style="margin:0">Прошлое / сегодня</h3><small class="muted">Проведите ползунок</small></div><div class="recon-wrap"><img class="recon-img" alt="Сегодня"><div class="recon-overlay"><img id="recon-then" alt="Прошлое"></div><input id="recon-slider" class="recon-slider" type="range" min="0" max="100" value="50"/></div></section>
+  <section class="section">
+    <h3>Interesting facts</h3>
+    <ul id="facts"></ul>
+  </section>
+
+  <section class="section quiz">
+    <h3>Check your knowledge</h3>
+    <div id="quiz"></div>
+    <div class="actions"><button class="btn" id="check" type="button">Check</button></div>
+  </section>
+
+  <section class="recon" aria-label="Past / Today">
+    <div class="recon-head">
+      <h3 style="margin:0">Past / Today</h3>
+      <small class="muted">Drag the slider</small>
+    </div>
+    <div class="recon-wrap">
+      <img class="recon-img" alt="Today">
+      <div class="recon-overlay"><img id="recon-then" alt="Past"></div>
+      <input id="recon-slider" class="recon-slider" type="range" min="0" max="100" value="50"/>
+    </div>
+  </section>
 </main>
-<footer><div class="container">© <span id="y"></span> Turkestan Guide</div></footer>
+
+<footer>
+  <div class="container">© <span id="y"></span> Turkestan Guide</div>
+</footer>
+
+<!-- === ВСТАВЬТЕ СЮДА объект window.PLACE из раздела 2 для нужного id === -->
+<script>
+window.PLACE={
+  id:'gauhar-ana',
+  name:'Gauhar Ana Mausoleum',
+  loc:'near Turkestan',
+  category:'Мавзолей',
+  img:'../img/gauhar-ana.webp',
+  lead:'A revered site associated with a spring of “healing” water in local tradition.',
+  facts:[
+    'Visited by pilgrims year-round.',
+    'Simple architecture in a tranquil setting.',
+    'Linked to regional oral legends.'
+  ],
+  questions:[
+    {q:'People come here primarily to…', a:['Pray and take water','Ski','Go scuba diving'], ok:0},
+    {q:'The site is described as…', a:['A mausoleum with a spring','A shopping mall','A spaceport'], ok:0}
+  ]
+};
+</script>
 
 <script>
-window.PLACE={id:'gauhar-ana',name:'Мавзолей «Гаухар Ана»',loc:'вблизи города',category:'Мавзолей',img:'../img/gauhar-ana.webp',
-lead:'Почитаемая святыня, посвящённая дочери Ахмеда Яссауи; место молитвы и надежды на исцеление.',
-facts:['Рядом источник, воде приписывают целебные свойства.','Живописные степные холмы вокруг.','Популярное паломническое место.'],
-questions:[{q:'Кем была Гаухар Ана?',a:['Дочерью Ахмеда Яссауи','Женой Абу Саида','Наставницей Яссауи'],ok:0},{q:'Что набирают паломники у мавзолея?',a:['Воду источника','Песок','Масло'],ok:0}]};
+/* Generic renderer (EN) */
+document.addEventListener('DOMContentLoaded',()=>{
+  const P=window.PLACE||{};
+  const $=(s,r=document)=>r.querySelector(s);
+
+  const y=$('#y'); if(y) y.textContent=new Date().getFullYear();
+
+  const h1=$('#title'); const doc=$('#doc-title');
+  h1&&(h1.textContent=P.name||'Untitled');
+  doc&&(doc.textContent=(P.name?P.name+' — ':'')+'Turkestan Guide');
+
+  const loc=$('#loc'); loc&&(loc.textContent=P.loc||'');
+  const lead=$('#lead'); lead&&(lead.textContent=P.lead||'');
+
+  const cover=$('.place-hero');
+  if(cover){
+    const src=P.img||('../img/'+(P.id||'placeholder')+'.webp');
+    cover.src=src; cover.alt=P.name||'';
+    cover.onerror=()=>{ cover.style.display='none'; };
+  }
+
+  const facts=$('#facts');
+  if(facts && Array.isArray(P.facts)){
+    facts.innerHTML=P.facts.map(t=>`<li>✅ ${escapeHtml(t)}</li>`).join('');
+  }
+
+  const quiz=$('#quiz');
+  if(quiz && Array.isArray(P.questions)){
+    quiz.innerHTML=P.questions.map((q,i)=>`
+      <div class="q" data-i="${i}">
+        <h4 style="margin:0 0 6px">${escapeHtml(q.q)}</h4>
+        ${q.a.map((opt,idx)=>`<label style="display:block;margin:6px 0"><input type="radio" name="q${i}" value="${idx}"> ${escapeHtml(opt)}</label>`).join('')}
+        <div class="muted res" style="margin-top:6px"></div>
+      </div>`).join('');
+    const btn=$('#check');
+    btn&&btn.addEventListener('click',()=>{
+      quiz.querySelectorAll('.q').forEach(box=>{
+        const i=+box.dataset.i, ok=(P.questions[i].ok|0);
+        const picked=box.querySelector('input[type=radio]:checked');
+        const res=box.querySelector('.res');
+        if(!picked){res.textContent='Choose an option';return;}
+        res.textContent=(+picked.value===ok)?'Correct! 🎉':'Not quite. Try again.';
+      });
+    });
+  }
+
+  const map=$('#map');
+  map&&(map.href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((P.name||'')+' '+(P.loc||'Turkestan region'))}`);
+
+  // Hide recon block by default (no images yet)
+  const recon=document.querySelector('.recon'); if(recon) recon.style.display='none';
+
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+});
 </script>
 <script>
-document.addEventListener('DOMContentLoaded',()=>{const P=window.PLACE||{};const $=(s,r=document)=>r.querySelector(s);const Y=$('#y');Y&&(Y.textContent=new Date().getFullYear());const title=$('#title'),loc=$('#loc'),lead=$('#lead'),facts=$('#facts'),quiz=$('#quiz'),mapA=$('#map');const cover=$('.place-hero');if(cover){const src=P.img||('../img/'+(P.id||'placeholder')+'.webp');cover.src=src;cover.alt=P.name||'';cover.onerror=()=>{cover.style.display='none';}}title&&(title.textContent=P.name||'Без названия');loc&&(loc.textContent=P.loc||'');lead&&(lead.textContent=P.lead||'');if(facts&&Array.isArray(P.facts))facts.innerHTML=P.facts.map(t=>`<li>✅ ${escape(t)}</li>`).join('');if(quiz&&Array.isArray(P.questions)){quiz.innerHTML=P.questions.map((q,i)=>`<div class="q" data-i="${i}"><h4 style="margin:0 0 6px">${escape(q.q)}</h4>${q.a.map((opt,idx)=>`<label style="display:block;margin:6px 0"><input type="radio" name="q${i}" value="${idx}"> ${escape(opt)}</label>`).join('')}<div class="muted res" style="margin-top:6px"></div></div>`).join('');const btn=$('#check');btn&&btn.addEventListener('click',()=>{quiz.querySelectorAll('.q').forEach(box=>{const i=+box.dataset.i,ok=(P.questions[i].ok|0);const picked=box.querySelector('input[type=radio]:checked');const res=box.querySelector('.res');if(!picked){res.textContent='Выберите вариант';return;}res.textContent=(+picked.value===ok)?'Верно! 🎉':'Неверно. Попробуйте ещё.';});});}mapA&&(mapA.href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((P.name||'')+' '+(P.loc||''))}`);const recon=document.querySelector('.recon');if(recon)recon.style.display='none';function escape(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}});
+/* Bridge: sync "I was here" with Passport (visited + passport_log) */
+(function () {
+  const ID   = (window.PLACE && window.PLACE.id) || null;
+  const mark = document.getElementById('mark');
+  if (!ID || !mark) return;
+
+  const VIS_KEY = 'visited';      // объект: { [id]: timestamp }
+  const LOG_KEY = 'passport_log'; // массив: [{id, date}]
+
+  const readJSON  = (k, d)=>{ try{ const s=localStorage.getItem(k); return s?JSON.parse(s):d; }catch{ return d; } };
+  const writeJSON = (k, v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} };
+
+  function isVisited(id){
+    const v = readJSON(VIS_KEY, {});
+    return !!v[id];
+  }
+  function setVisited(id, on){
+    const v = readJSON(VIS_KEY, {});
+    if (on) v[id] = Date.now(); else delete v[id];
+    writeJSON(VIS_KEY, v);
+
+    let log = readJSON(LOG_KEY, []);
+    if (on){
+      if (!log.find(x => x.id === id)) log.push({ id, date: Date.now() });
+    } else {
+      log = log.filter(x => x.id !== id);
+    }
+    writeJSON(LOG_KEY, log);
+  }
+  function syncUI(){
+    const on = isVisited(ID);
+    mark.dataset.on = on ? '1' : '';
+    // i18n-текст, если есть, иначе англ.
+    const base = (window.I18N && I18N.t) ? I18N.t('place.mark') : 'I was here';
+    mark.textContent = on ? (base + ' ✓') : base;
+  }
+
+  mark.addEventListener('click', () => {
+    const on = isVisited(ID);
+    setVisited(ID, !on);
+    syncUI();
+    // Обновим бейдж на индексной, если открыт в той же вкладке
+    if (window.updateVisitedBadge) {
+      try {
+        const total = Object.keys(readJSON(VIS_KEY, {})).length;
+        updateVisitedBadge(total);
+      } catch {}
+    }
+  });
+
+  // Инициализация
+  syncUI();
+})();
 </script>
+
 <script src="../js/place-page.js" defer></script>
 </body>
 </html>

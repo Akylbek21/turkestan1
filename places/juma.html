@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Джума-мечеть — Turkestan Guide</title>
+<title id="doc-title">Place — Turkestan Guide</title>
 <link rel="stylesheet" href="../css/main.css"/>
 </head>
 <body>
 <header>
   <div class="container" style="display:flex;gap:10px;align-items:center">
-    <a href="../index.html" class="badge" style="text-decoration:none">← На главную</a>
-    <h1 id="title">Джума-мечеть</h1>
+    <a href="../index.html" class="badge" style="text-decoration:none">← Home</a>
+    <h1 id="title">Place</h1>
   </div>
 </header>
 
@@ -20,167 +20,172 @@
   <p class="lead" id="lead"></p>
 
   <div class="actions">
-    <button class="btn primary" id="mark" type="button">Был здесь</button>
-    <a class="btn" id="map" target="_blank" rel="noopener">Открыть в Google Maps</a>
-    <button class="btn" id="share" type="button">Поделиться</button>
+    <button class="btn primary" id="mark" type="button">I was here</button>
+    <a class="btn" id="map" target="_blank" rel="noopener">Open in Google Maps</a>
+    <button class="btn" id="share" type="button">Share</button>
   </div>
 
   <section class="section">
-    <h3>Интересные факты</h3>
+    <h3>Interesting facts</h3>
     <ul id="facts"></ul>
   </section>
 
   <section class="section quiz">
-    <h3>Проверь знания</h3>
+    <h3>Check your knowledge</h3>
     <div id="quiz"></div>
-    <div class="actions"><button class="btn" id="check" type="button">Проверить</button></div>
+    <div class="actions"><button class="btn" id="check" type="button">Check</button></div>
   </section>
 
-  <section class="recon" aria-label="Прошлое / сегодня">
+  <section class="recon" aria-label="Past / Today">
     <div class="recon-head">
-      <h3 style="margin:0">Прошлое / сегодня</h3>
-      <small class="muted">Проведите ползунок</small>
+      <h3 style="margin:0">Past / Today</h3>
+      <small class="muted">Drag the slider</small>
     </div>
     <div class="recon-wrap">
-      <img class="recon-img" alt="Сегодня">
-      <div class="recon-overlay"><img id="recon-then" alt="Прошлое"></div>
+      <img class="recon-img" alt="Today">
+      <div class="recon-overlay"><img id="recon-then" alt="Past"></div>
       <input id="recon-slider" class="recon-slider" type="range" min="0" max="100" value="50"/>
     </div>
   </section>
 </main>
 
-<footer><div class="container">© <span id="y"></span> Turkestan Guide</div></footer>
+<footer>
+  <div class="container">© <span id="y"></span> Turkestan Guide</div>
+</footer>
 
-<!-- 1) ДАННЫЕ МЕСТА — сначала -->
+<!-- === ВСТАВЬТЕ СЮДА объект window.PLACE из раздела 2 для нужного id === -->
 <script>
-window.PLACE = {
+window.PLACE={
   id:'juma',
-  name:'Джума-мечеть',
-  loc:'г. Туркестан',
+  name:'Juma (Friday) Mosque',
+  loc:'Turkestan city',
   category:'Мечеть',
-  img:'../img/juma.webp',             // убедись, что файл существует; иначе поменяй расширение
-  lead:'Пятничная мечеть XVI века, известная деревянными колоннами.',
+  img:'../img/juma.webp',
+  lead:'One of the city’s oldest religious sites; a classic Central Asian structure with wooden columns.',
   facts:[
-    'По некоторым данным, древесина для колонн привезена из Индии.',
-    'Была религиозным и общественным центром города.',
-    'Кирпичная архитектура с резьбой и традиционными узорами.'
+    'Historically both religious and civic center.',
+    'Dates back to the 16th century in tradition.',
+    'Still hosts congregational prayers.'
   ],
   questions:[
-    {q:'Главная молитва по пятницам называется…', a:['Джума-намаз','Тарауих-намаз','Айт-намаз'], ok:0},
-    {q:'Из какого материала выполнены колонны?',   a:['Дерево','Кирпич','Мрамор'],               ok:0}
+    {q:'What day gathers the largest prayer here?', a:['Friday','Saturday','Monday'], ok:0},
+    {q:'A typical architectural feature is…', a:['Wooden columns','Flying buttresses','Gothic spire'], ok:0}
   ]
-  // Если будет реконструкция, добавь:
-  // ,recon:{ now:'../img/juma-now.jpg', then:'../img/juma-then.jpg' }
 };
 </script>
 
-<!-- 2) РЕНДЕР В DOM -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const P = window.PLACE || {};
-  const $ = (s,root=document)=>root.querySelector(s);
+/* Generic renderer (EN) */
+document.addEventListener('DOMContentLoaded',()=>{
+  const P=window.PLACE||{};
+  const $=(s,r=document)=>r.querySelector(s);
 
-  const Y = $('#y'); Y && (Y.textContent = new Date().getFullYear());
+  const y=$('#y'); if(y) y.textContent=new Date().getFullYear();
 
-  const title = $('#title');
-  const loc   = $('#loc');
-  const lead  = $('#lead');
-  const facts = $('#facts');
-  const quiz  = $('#quiz');
-  const mapA  = $('#map');
+  const h1=$('#title'); const doc=$('#doc-title');
+  h1&&(h1.textContent=P.name||'Untitled');
+  doc&&(doc.textContent=(P.name?P.name+' — ':'')+'Turkestan Guide');
 
-  // Обложка (поддерживаем .place-hero)
-  const cover = $('.place-hero');
-  if (cover) {
-    const src = P.img || ('../img/'+(P.id||'placeholder')+'.webp');
-    cover.src = src;
-    cover.alt = P.name || '';
-    cover.onerror = () => { cover.style.display='none'; };
+  const loc=$('#loc'); loc&&(loc.textContent=P.loc||'');
+  const lead=$('#lead'); lead&&(lead.textContent=P.lead||'');
+
+  const cover=$('.place-hero');
+  if(cover){
+    const src=P.img||('../img/'+(P.id||'placeholder')+'.webp');
+    cover.src=src; cover.alt=P.name||'';
+    cover.onerror=()=>{ cover.style.display='none'; };
   }
 
-  // Текст
-  if (title) title.textContent = P.name || 'Без названия';
-  if (loc)   loc.textContent   = P.loc  || '';
-  if (lead)  lead.textContent  = P.lead || '';
-
-  // Факты
-  if (facts && Array.isArray(P.facts)) {
-    facts.innerHTML = P.facts.map(t=>`<li>✅ ${esc(t)}</li>`).join('');
+  const facts=$('#facts');
+  if(facts && Array.isArray(P.facts)){
+    facts.innerHTML=P.facts.map(t=>`<li>✅ ${escapeHtml(t)}</li>`).join('');
   }
 
-  // Викторина
-  if (quiz && Array.isArray(P.questions)) {
-    quiz.innerHTML = P.questions.map((q,i)=>`
+  const quiz=$('#quiz');
+  if(quiz && Array.isArray(P.questions)){
+    quiz.innerHTML=P.questions.map((q,i)=>`
       <div class="q" data-i="${i}">
-        <h4 style="margin:0 0 6px">${esc(q.q)}</h4>
-        ${q.a.map((opt,idx)=>`<label style="display:block;margin:6px 0">
-          <input type="radio" name="q${i}" value="${idx}"> ${esc(opt)}
-        </label>`).join('')}
+        <h4 style="margin:0 0 6px">${escapeHtml(q.q)}</h4>
+        ${q.a.map((opt,idx)=>`<label style="display:block;margin:6px 0"><input type="radio" name="q${i}" value="${idx}"> ${escapeHtml(opt)}</label>`).join('')}
         <div class="muted res" style="margin-top:6px"></div>
-      </div>
-    `).join('');
-    const checkBtn = document.getElementById('check');
-    checkBtn && checkBtn.addEventListener('click', () => {
+      </div>`).join('');
+    const btn=$('#check');
+    btn&&btn.addEventListener('click',()=>{
       quiz.querySelectorAll('.q').forEach(box=>{
-        const i = +box.dataset.i;
-        const ok = (P.questions[i].ok|0);
-        const picked = box.querySelector('input[type=radio]:checked');
-        const res = box.querySelector('.res');
-        if (!picked) { res.textContent = 'Выберите вариант'; return; }
-        res.textContent = (+picked.value===ok) ? 'Верно! 🎉' : 'Неверно. Попробуйте ещё.';
+        const i=+box.dataset.i, ok=(P.questions[i].ok|0);
+        const picked=box.querySelector('input[type=radio]:checked');
+        const res=box.querySelector('.res');
+        if(!picked){res.textContent='Choose an option';return;}
+        res.textContent=(+picked.value===ok)?'Correct! 🎉':'Not quite. Try again.';
       });
     });
   }
 
-  // Карта
-  if (mapA) {
-    mapA.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((P.name||'')+' '+(P.loc||''))}`;
-  }
+  const map=$('#map');
+  map&&(map.href=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((P.name||'')+' '+(P.loc||'Turkestan region'))}`);
 
-  // Реконструкция (если нет картинок — скрываем блок)
-  const reconWrap = document.querySelector('.recon');
-  if (!(P.recon && P.recon.now && P.recon.then)) {
-    reconWrap && (reconWrap.style.display='none');
-  } else {
-    const nowImg  = $('.recon-img', reconWrap);
-    const thenImg = $('#recon-then', reconWrap) || $('.recon-overlay img', reconWrap);
-    const slider  = $('#recon-slider', reconWrap) || $('.recon-slider', reconWrap);
-    nowImg && (nowImg.src = P.recon.now);
-    thenImg && (thenImg.src = P.recon.then);
-    if (slider && thenImg) {
-      slider.addEventListener('input', ()=> {
-        const right = 100 - parseInt(slider.value,10);
-        thenImg.style.clipPath = `inset(0 ${right}% 0 0)`;
-      });
-    }
-  }
+  // Hide recon block by default (no images yet)
+  const recon=document.querySelector('.recon'); if(recon) recon.style.display='none';
 
-  // Поделиться (вкл. Web Share API + fallback)
-  const shareBtn = document.getElementById('share');
-  shareBtn && shareBtn.addEventListener('click', async () => {
-    const url = location.href;
-    const text = `${P.name} — ${P.loc}`;
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: P.name, text, url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        toast('Ссылка скопирована!');
-      }
-    } catch(_) {}
-  });
-
-  function esc(s){return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
-  function toast(msg){
-    const t=document.createElement('div');
-    t.textContent=msg;
-    t.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:rgba(14,165,233,.95);color:#05201a;padding:10px 14px;border-radius:12px;font:600 14px system-ui;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,.25)';
-    document.body.appendChild(t); setTimeout(()=>{t.style.transition='opacity .3s'; t.style.opacity='0';},1400); setTimeout(()=>t.remove(),1800);
-  }
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
 });
 </script>
+<script>
+/* Bridge: sync "I was here" with Passport (visited + passport_log) */
+(function () {
+  const ID   = (window.PLACE && window.PLACE.id) || null;
+  const mark = document.getElementById('mark');
+  if (!ID || !mark) return;
 
-<!-- 3) ЛОГИКА «Был здесь» — ПОСЛЕ window.PLACE -->
+  const VIS_KEY = 'visited';      // объект: { [id]: timestamp }
+  const LOG_KEY = 'passport_log'; // массив: [{id, date}]
+
+  const readJSON  = (k, d)=>{ try{ const s=localStorage.getItem(k); return s?JSON.parse(s):d; }catch{ return d; } };
+  const writeJSON = (k, v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} };
+
+  function isVisited(id){
+    const v = readJSON(VIS_KEY, {});
+    return !!v[id];
+  }
+  function setVisited(id, on){
+    const v = readJSON(VIS_KEY, {});
+    if (on) v[id] = Date.now(); else delete v[id];
+    writeJSON(VIS_KEY, v);
+
+    let log = readJSON(LOG_KEY, []);
+    if (on){
+      if (!log.find(x => x.id === id)) log.push({ id, date: Date.now() });
+    } else {
+      log = log.filter(x => x.id !== id);
+    }
+    writeJSON(LOG_KEY, log);
+  }
+  function syncUI(){
+    const on = isVisited(ID);
+    mark.dataset.on = on ? '1' : '';
+    // i18n-текст, если есть, иначе англ.
+    const base = (window.I18N && I18N.t) ? I18N.t('place.mark') : 'I was here';
+    mark.textContent = on ? (base + ' ✓') : base;
+  }
+
+  mark.addEventListener('click', () => {
+    const on = isVisited(ID);
+    setVisited(ID, !on);
+    syncUI();
+    // Обновим бейдж на индексной, если открыт в той же вкладке
+    if (window.updateVisitedBadge) {
+      try {
+        const total = Object.keys(readJSON(VIS_KEY, {})).length;
+        updateVisitedBadge(total);
+      } catch {}
+    }
+  });
+
+  // Инициализация
+  syncUI();
+})();
+</script>
+
 <script src="../js/place-page.js" defer></script>
 </body>
 </html>

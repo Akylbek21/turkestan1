@@ -56,20 +56,20 @@
 <!-- === ВСТАВЬТЕ СЮДА объект window.PLACE из раздела 2 для нужного id === -->
 <script>
 window.PLACE={
-  id:'esim-khan',
-  name:'Mausoleum of Esim Khan',
-  loc:'Azret Sultan Reserve',
-  category:'Мавзолей',
-  img:'../img/esim-khan.webp',
-  lead:'Commemorates the 17th-century Kazakh ruler Esim Khan, known for legal reforms “Esim khannyn eski zholy”.',
+  id:'otrar',
+  name:'Otrar Settlement (Otyrartobe)',
+  loc:'Shaulder village',
+  category:'Археология',
+  img:'../img/otrar.webp',
+  lead:'An ancient Silk Road city—birthplace of al-Farabi; sacked by the Mongols in 1219 and revived later.',
   facts:[
-    'Located within the historic necropolis.',
-    'Current structure reflects traditional Central Asian forms.',
-    'A site of national remembrance.'
+    'Part of the Otrar oasis—a major caravan hub.',
+    'Excavations reveal citadel, residential blocks and ceramic kilns.',
+    'Linked to scholar Abu Nasr al-Farabi.'
   ],
   questions:[
-    {q:'Esim Khan is known for…', a:['Legal code reforms','Astronomical observatory','Minting gold dinars'], ok:0},
-    {q:'Century associated with Esim Khan?', a:['17th c.','14th c.','19th c.'], ok:0}
+    {q:'Who is the famed philosopher associated with Otrar?', a:['al-Farabi','Ibn Sina','al-Khwarizmi'], ok:0},
+    {q:'When was Otrar devastated by the Mongols?', a:['1219','1099','1405'], ok:0}
   ]
 };
 </script>
@@ -129,6 +129,61 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
 });
+</script>
+<script>
+/* Bridge: sync "I was here" with Passport (visited + passport_log) */
+(function () {
+  const ID   = (window.PLACE && window.PLACE.id) || null;
+  const mark = document.getElementById('mark');
+  if (!ID || !mark) return;
+
+  const VIS_KEY = 'visited';      // объект: { [id]: timestamp }
+  const LOG_KEY = 'passport_log'; // массив: [{id, date}]
+
+  const readJSON  = (k, d)=>{ try{ const s=localStorage.getItem(k); return s?JSON.parse(s):d; }catch{ return d; } };
+  const writeJSON = (k, v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} };
+
+  function isVisited(id){
+    const v = readJSON(VIS_KEY, {});
+    return !!v[id];
+  }
+  function setVisited(id, on){
+    const v = readJSON(VIS_KEY, {});
+    if (on) v[id] = Date.now(); else delete v[id];
+    writeJSON(VIS_KEY, v);
+
+    let log = readJSON(LOG_KEY, []);
+    if (on){
+      if (!log.find(x => x.id === id)) log.push({ id, date: Date.now() });
+    } else {
+      log = log.filter(x => x.id !== id);
+    }
+    writeJSON(LOG_KEY, log);
+  }
+  function syncUI(){
+    const on = isVisited(ID);
+    mark.dataset.on = on ? '1' : '';
+    // i18n-текст, если есть, иначе англ.
+    const base = (window.I18N && I18N.t) ? I18N.t('place.mark') : 'I was here';
+    mark.textContent = on ? (base + ' ✓') : base;
+  }
+
+  mark.addEventListener('click', () => {
+    const on = isVisited(ID);
+    setVisited(ID, !on);
+    syncUI();
+    // Обновим бейдж на индексной, если открыт в той же вкладке
+    if (window.updateVisitedBadge) {
+      try {
+        const total = Object.keys(readJSON(VIS_KEY, {})).length;
+        updateVisitedBadge(total);
+      } catch {}
+    }
+  });
+
+  // Инициализация
+  syncUI();
+})();
 </script>
 <script>
 /* Bridge: sync "I was here" with Passport (visited + passport_log) */
