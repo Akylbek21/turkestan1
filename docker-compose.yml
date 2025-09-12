@@ -1,0 +1,7 @@
+services:
+  turkestan:
+    build: .
+    image: turkestan-guide:latest
+    container_name: turkestan-guide
+    ports: ["9005:80"]
+    restart: unless-stopped
