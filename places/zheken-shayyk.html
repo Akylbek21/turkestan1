@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title id="doc-title">Zheken Shayyk Saint — Turkestan Guide</title>
+    <link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<header>
+    <div class="container" style="display:flex;gap:10px;align-items:center">
+        <a href="../index.html" class="badge" style="text-decoration:none">← Home</a>
+        <h1 id="title">Zheken Shayyk Saint</h1></div>
+</header>
+<img class="place-hero" alt="">
+<main class="main">
+    <div class="loc" id="loc"></div>
+    <p class="lead" id="lead"></p>
+    <div class="actions">
+        <button class="btn primary" id="mark" type="button">I was here</button>
+        <a class="btn" id="map" target="_blank" rel="noopener">Open in Google Maps</a>
+        <button class="btn" id="share" type="button">Share</button>
+    </div>
+    <section class="section"><h3>Interesting facts</h3>
+        <ul id="facts"></ul>
+    </section>
+    <section class="section quiz"><h3>Check your knowledge</h3>
+        <div id="quiz"></div>
+        <div class="actions">
+            <button class="btn" id="check" type="button">Check</button>
+        </div>
+    </section>
+</main>
+<footer>
+    <div class="container">© <span id="y"></span> Turkestan Guide</div>
+</footer>
+
+<script>
+    window.PLACE = {
+        id: 'zheken-shayyk',
+        name: 'Zheken Shayyk Saint',
+        loc: 'Arys district, Turkistan region',
+        category: 'Мавзолей',
+        img: '../img/places/zheken-shayyk.jpeg',
+        lead: 'A revered saint and Islamic preacher; his mausoleum is a respected pilgrimage site.',
+        facts: [
+            '“Shayyk” (شيخ) — Arabic for spiritual teacher / saint.',
+            'Known for calling people to faith, kindness, and honesty.',
+            'Life is mainly preserved in oral legends and stories.',
+            'Visitors make wishes, offer sacrifices, and recite prayers.'
+        ],
+        questions: [
+            {
+                q: 'Where is the mausoleum?',
+                a: ['Turkistan region, Arys district', 'Almaty/Talgar', 'Mangystau/Aktau', 'Astana'],
+                ok: 0
+            },
+            {q: 'Meaning of “Shayyk”?', a: ['Warrior', 'King', 'Spiritual teacher / saint', 'Farmer'], ok: 2},
+            {
+                q: 'What was he known for?',
+                a: ['Math teaching', 'Preaching Islam and honesty', 'Military campaigns', 'City building'],
+                ok: 1
+            },
+            {
+                q: 'Why few written sources?',
+                a: ['He never existed', 'Only foreign books', 'Mostly oral legends', 'All burned'],
+                ok: 2
+            },
+            {
+                q: 'How locals honor today?',
+                a: ['Avoid the place', 'Visit, make wishes & prayers', 'Build houses', 'Hold sports'],
+                ok: 1
+            }
+        ]
+    };
+</script>
+<script src="../js/place-page.js" defer></script>
+</body>
+</html>

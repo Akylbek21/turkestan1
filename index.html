@@ -88,9 +88,14 @@ addEventListener('pointerover',e=>{
 <script>
 /* ===== 1) DATA (English titles/locations; categories keep RU values) ===== */
 const PLACES = [
-  { id:'arys-station',      title:'Arys-1 Railway Station',              location:'Arys city',                 category:'Инфраструктура', img:'img/arys-station.webp' },
-  { id:'otrar',             title:'Otrar Settlement (Otyrartobe)',       location:'Shaulder village',          category:'Археология',     img:'img/otrar.webp' },
-  { id:'kuyryktobe',        title:'Kuyryktobe Settlement',                location:'near Kogam',                category:'Археология',     img:'img/kuyryktobe.webp' },
+  { id:'mailikozha-homeland',  title:'Homeland of Poet Mailikozha',        location:'Arys district',       category:'Культура',     img:'img/places/mailikozha-homeland.jpeg' },
+  { id:'murynkarak-seven-mounds', title:'“Seven Burial Mounds” of Murynkarak', location:'Arys district', category:'Археология',   img:'img/places/murynkarak-seven-mounds.jpeg' },
+  { id:'munlyq-zarliq-mausoleum', title:'Mausoleum of Munlyq and Zarliq',  location:'near Zhideli & Akdala', category:'Мавзолей', img:'img/places/munlyq-zarliq-mausoleum.jpeg' },
+  { id:'bairkumtobe',       title:'Bairkumtobe Ancient Settlement',        location:'left bank of Syr Darya', category:'Археология', img:'img/places/bairkumtobe.jpeg' },
+  { id:'zheken-shayyk',     title:'Zheken Shayyk Saint',                   location:'Arys district',       category:'Мавзолей',     img:'img/places/zheken-shayyk.jpeg' },
+  { id:'arys-station',      title:'Arys-1 Railway Station',                location:'Arys city',                 category:'Инфраструктура', img:'img/arys-station.webp' },
+  { id:'otrar',             title:'Otrar Settlement (Otyrartobe)',         location:'Shaulder village',          category:'Археология',     img:'img/otrar.webp' },
+  { id:'kuyryktobe',        title:'Kuyryktobe Settlement',                 location:'near Kogam',                category:'Археология',     img:'img/kuyryktobe.webp' },
   { id:'sauran',            title:'Sauran Fortress',                       location:'Turkestan Region',          category:'Археология',     img:'img/sauran.webp' },
   { id:'munlyk-zarlyk',     title:'Epic “Munlyq–Zarlyq”',                  location:'Turkestan',                 category:'Культура' },
 
@@ -138,8 +143,8 @@ function resolveImageFor(id){
   const custom = OVERRIDES[id] ? [OVERRIDES[id]] : [];
   const candidates = [
     `img/${id}.webp`, `img/${id}.jpg`, `img/${id}.jpeg`, `img/${id}.png`,
-    `img/places/${id}.webp`, `img/places/${id}.jpg`,
-    `img/places/${id}/cover.webp`, `img/places/${id}/cover.jpg`, `img/places/${id}/cover.png`
+    `img/places/${id}.webp`, `img/places/${id}.jpg`, `img/places/${id}.jpeg`,
+    `img/places/${id}/cover.webp`, `img/places/${id}/cover.jpg`, `img/places/${id}/cover.jpeg`, `img/places/${id}/cover.png`
   ];
   return [...custom, ...candidates];
 }

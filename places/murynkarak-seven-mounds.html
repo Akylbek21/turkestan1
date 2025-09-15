@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title id="doc-title">“Seven Burial Mounds” of Murynkarak — Turkestan Guide</title>
+    <link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<header>
+    <div class="container" style="display:flex;gap:10px;align-items:center">
+        <a href="../index.html" class="badge" style="text-decoration:none">← Home</a>
+        <h1 id="title">“Seven Burial Mounds” of Murynkarak</h1></div>
+</header>
+<img class="place-hero" alt="">
+<main class="main">
+    <div class="loc" id="loc"></div>
+    <p class="lead" id="lead"></p>
+    <div class="actions">
+        <button class="btn primary" id="mark" type="button">I was here</button>
+        <a class="btn" id="map" target="_blank" rel="noopener">Open in Google Maps</a>
+        <button class="btn" id="share" type="button">Share</button>
+    </div>
+    <section class="section"><h3>Interesting facts</h3>
+        <ul id="facts"></ul>
+    </section>
+    <section class="section quiz"><h3>Check your knowledge</h3>
+        <div id="quiz"></div>
+        <div class="actions">
+            <button class="btn" id="check" type="button">Check</button>
+        </div>
+    </section>
+</main>
+<footer>
+    <div class="container">© <span id="y"></span> Turkestan Guide</div>
+</footer>
+
+<script>
+    window.PLACE = {
+        id: 'murynkarak-seven-mounds',
+        name: '“Seven Burial Mounds” of Murynkarak',
+        loc: 'Arys district, Turkistan region',
+        category: 'Археология',
+        img: '../img/places/murynkarak-seven-mounds.jpeg',
+        lead: 'Seven kurgans grouped together on a steppe plain; Saka–Wusun horizon (mid-1st millennium BC – early AD centuries).',
+        facts: [
+            'Each mound ≈ 2–3 m high, 15–40 m diameter.',
+            'Built mostly from earth; some show stone masonry.',
+            'Likely burials of tribal leaders, warriors, nobles.',
+            'Locals call it the “Cemetery of Seven Ancestors”.',
+            'Number “seven” is sacred in Kazakh worldview.'
+        ],
+        questions: [
+            {q: 'Where is the site?', a: ['Almaty', 'Arys district, Murynkarak area', 'Astana', 'Mangystau'], ok: 1},
+            {q: 'Cultural period?', a: ['Bronze Age', 'Saka & Wusun', 'Middle Ages', '18–19 cc.'], ok: 1},
+            {q: 'How many mounds?', a: ['3', '5', '7', '10'], ok: 2},
+            {
+                q: 'Typical size?',
+                a: ['10 m high, 100 m Ø', '2–3 m high, 15–40 m Ø', '1 m high, 5 m Ø', '6 m high, 80 m Ø'],
+                ok: 1
+            },
+            {q: 'Who were buried?', a: ['Farmers', 'Leaders & warriors', 'Children only', 'Foreigners'], ok: 1},
+            {
+                q: 'Local name in legends?',
+                a: ['Cemetery of heroes', 'Cemetery of seven ancestors', 'Lost treasure', 'Khan’s fortress'],
+                ok: 1
+            }
+        ]
+    };
+</script>
+<script src="../js/place-page.js" defer></script>
+</body>
+</html>

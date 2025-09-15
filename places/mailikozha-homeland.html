@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title id="doc-title">Homeland of Poet Mailikozha — Turkestan Guide</title>
+    <link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<header>
+    <div class="container" style="display:flex;gap:10px;align-items:center">
+        <a href="../index.html" class="badge" style="text-decoration:none">← Home</a>
+        <h1 id="title">Homeland of Poet Mailikozha</h1></div>
+</header>
+<img class="place-hero" alt="">
+<main class="main">
+    <div class="loc" id="loc"></div>
+    <p class="lead" id="lead"></p>
+    <div class="actions">
+        <button class="btn primary" id="mark" type="button">I was here</button>
+        <a class="btn" id="map" target="_blank" rel="noopener">Open in Google Maps</a>
+        <button class="btn" id="share" type="button">Share</button>
+    </div>
+    <section class="section"><h3>Interesting facts</h3>
+        <ul id="facts"></ul>
+    </section>
+    <section class="section quiz"><h3>Check your knowledge</h3>
+        <div id="quiz"></div>
+        <div class="actions">
+            <button class="btn" id="check" type="button">Check</button>
+        </div>
+    </section>
+</main>
+<footer>
+    <div class="container">© <span id="y"></span> Turkestan Guide</div>
+</footer>
+
+<script>
+    window.PLACE = {
+        id: 'mailikozha-homeland',
+        name: 'Homeland of Poet Mailikozha',
+        loc: 'Arys district',
+        category: 'Культура',
+        img: '../img/places/mailikozha-homeland.jpeg',
+        lead: 'Birthplace and homeland of Mailikozha Sultankhojauly (1835–1898), a renowned Kazakh folk poet and bard.',
+        facts: [
+            'Locals call the village “Mailitobe” or “Mailikozha”.',
+            'Sacred place linked to Kazakh literature and spiritual heritage.',
+            'Pilgrims visit the poet’s grave to pay respects.',
+            'Nearby: cemeteries and ancient sites associated with his name.',
+            'Adilet Newspaper (2021) mentions a mosque–madrasa in the rabat area of Shogirli, near Kozhatoğai (Syr Darya).'
+        ],
+        questions: [
+            {
+                q: 'Who was Mailikozha Sultankhojauly?',
+                a: ['A Kazakh warrior', 'A famous Kazakh folk poet of the 19th century', 'A medieval khan', 'An archaeologist'],
+                ok: 1
+            },
+            {q: 'Where did he live?', a: ['Almaty region', 'Arys region, Turkistan', 'Mangystau', 'Astana'], ok: 1},
+            {
+                q: 'How do locals call the poet’s village?',
+                a: ['Rabat or Shogirli', 'Mailitobe or Mailikozha village', 'Kozhatoğai or Syrdarya', 'Adilet or Akdala'],
+                ok: 1
+            },
+            {
+                q: 'Cultural significance of the homeland?',
+                a: ['Military base', 'Sacred place of Kazakh literature', 'Silk Road market', 'Royal palace'],
+                ok: 1
+            },
+            {
+                q: 'Where was the mosque–madrasa (per Adilet)?',
+                a: ['Almaty', 'Rabat of Shogirli near Kozhatoğai', 'Shymkent', 'Mangystau'],
+                ok: 1
+            }
+        ]
+    };
+</script>
+
+<script src="../js/place-page.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title id="doc-title">Mausoleum of Munlyq and Zarliq — Turkestan Guide</title>
+    <link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<header>
+    <div class="container" style="display:flex;gap:10px;align-items:center">
+        <a href="../index.html" class="badge" style="text-decoration:none">← Home</a>
+        <h1 id="title">Mausoleum of Munlyq and Zarliq</h1></div>
+</header>
+<img class="place-hero" alt="">
+<main class="main">
+    <div class="loc" id="loc"></div>
+    <p class="lead" id="lead"></p>
+    <div class="actions">
+        <button class="btn primary" id="mark" type="button">I was here</button>
+        <a class="btn" id="map" target="_blank" rel="noopener">Open in Google Maps</a>
+        <button class="btn" id="share" type="button">Share</button>
+    </div>
+    <section class="section"><h3>Interesting facts</h3>
+        <ul id="facts"></ul>
+    </section>
+    <section class="section quiz"><h3>Check your knowledge</h3>
+        <div id="quiz"></div>
+        <div class="actions">
+            <button class="btn" id="check" type="button">Check</button>
+        </div>
+    </section>
+</main>
+<footer>
+    <div class="container">© <span id="y"></span> Turkestan Guide</div>
+</footer>
+
+<script>
+    window.PLACE = {
+        id: 'munlyq-zarliq-mausoleum',
+        name: 'Mausoleum of Munlyq and Zarliq',
+        loc: 'Arys district, near Zhideli & Akdala (~25–30 km SW of Arys)',
+        category: 'Мавзолей',
+        img: '../img/places/munlyq-zarliq-mausoleum.jpeg',
+        lead: 'A sacred site associated with the Kazakh legend of the lovers Munlyq and Zarliq; a symbol of loyalty and love.',
+        facts: [
+            'Two separate mausoleums (for Munlyq and for Zarliq).',
+            'Built of baked bricks; domed-mausoleum traits preserved.',
+            'Restored multiple times; popular for prayers and visits.',
+            'Legend links to early Kazakh kui (melody) origins.'
+        ],
+        questions: [
+            {
+                q: 'Where is it located?',
+                a: ['Near Shymkent', 'Arys district, near Zhideli & Akdala', 'Almaty region', 'Mangystau'],
+                ok: 1
+            },
+            {q: 'Distance from Arys?', a: ['5–10 km', '25–30 km', '50–60 km', '100 km'], ok: 1},
+            {
+                q: 'What is it tied to?',
+                a: ['War hero', 'Lovers’ legend', 'Khan’s palace', 'Archaeological depot'],
+                ok: 1
+            },
+            {
+                q: 'Why couldn’t they be together?',
+                a: ['Different countries', 'Local traditions forbade', 'Rival tribes', 'Different religions'],
+                ok: 1
+            },
+            {
+                q: 'What musical tradition is linked?',
+                a: ['First poem', 'First Kazakh kui', 'First epic', 'Arabic song'],
+                ok: 1
+            }
+        ]
+    };
+</script>
+<script src="../js/place-page.js" defer></script>
+</body>
+</html>

@@ -165,12 +165,16 @@
   <script>
   /* ===== Data: 27 places (EN) ===== */
   const PLACES = [
+    { id:'mailikozha-homeland',   title:'Homeland of Poet Mailikozha',      location:'Arys district' },
+    { id:'murynkarak-seven-mounds', title:'“Seven Burial Mounds” of Murynkarak', location:'Arys district' },
+    { id:'munlyq-zarliq-mausoleum', title:'Mausoleum of Munlyq and Zarliq', location:'near Zhideli & Akdala' },
+    { id:'bairkumtobe',            title:'Bairkumtobe Ancient Settlement',  location:'left bank of Syr Darya' },
+    { id:'zheken-shayyk',          title:'Zheken Shayyk Saint',             location:'Arys district' },
     { id:'arys-station',       title:'Arys-1 Railway Station',               location:'Arys city' },
     { id:'otrar',              title:'Otrar Settlement (Otyrartobe)',        location:'Shaulder village' },
     { id:'kuyryktobe',         title:'Kuyryktobe Settlement',                 location:'near Kogam' },
     { id:'sauran',             title:'Sauran Fortress',                        location:'Turkestan Region' },
     { id:'munlyk-zarlyk',      title:'Epic “Munlyq–Zarlyq”',                   location:'Turkestan' },
-
     { id:'yasawi',             title:'Mausoleum of Khoja Ahmed Yasawi',        location:'Turkestan city' },
     { id:'azret-sultan',       title:'Azret Sultan Reserve-Museum',            location:'historic center' },
     { id:'rabia-sultan-begim', title:'Mausoleum of Rabia Sultan Begim',        location:'near Yasawi' },
@@ -215,8 +219,8 @@
     const custom = OVERRIDES[id] ? [OVERRIDES[id]] : [];
     const cand = [
       `img/${id}.webp`,`img/${id}.jpg`,`img/${id}.jpeg`,`img/${id}.png`,
-      `img/places/${id}.webp`,`img/places/${id}.jpg`,
-      `img/places/${id}/cover.webp`,`img/places/${id}/cover.jpg`,`img/places/${id}/cover.png`
+      `img/places/${id}.webp`,`img/places/${id}.jpg`,`img/places/${id}.jpeg`,
+      `img/places/${id}/cover.webp`,`img/places/${id}/cover.jpg`,`img/places/${id}/cover.jpeg`,`img/places/${id}/cover.png`
     ];
     return [...custom, ...cand];
   }

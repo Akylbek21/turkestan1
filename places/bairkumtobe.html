@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title id="doc-title">Bairkumtobe Ancient Settlement — Turkestan Guide</title>
+    <link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<header>
+    <div class="container" style="display:flex;gap:10px;align-items:center">
+        <a href="../index.html" class="badge" style="text-decoration:none">← Home</a>
+        <h1 id="title">Bairkumtobe Ancient Settlement</h1></div>
+</header>
+<img class="place-hero" alt="">
+<main class="main">
+    <div class="loc" id="loc"></div>
+    <p class="lead" id="lead"></p>
+    <div class="actions">
+        <button class="btn primary" id="mark" type="button">I was here</button>
+        <a class="btn" id="map" target="_blank" rel="noopener">Open in Google Maps</a>
+        <button class="btn" id="share" type="button">Share</button>
+    </div>
+    <section class="section"><h3>Interesting facts</h3>
+        <ul id="facts"></ul>
+    </section>
+    <section class="section quiz"><h3>Check your knowledge</h3>
+        <div id="quiz"></div>
+        <div class="actions">
+            <button class="btn" id="check" type="button">Check</button>
+        </div>
+    </section>
+</main>
+<footer>
+    <div class="container">© <span id="y"></span> Turkestan Guide</div>
+</footer>
+
+<script>
+    window.PLACE = {
+        id: 'bairkumtobe',
+        name: 'Bairkumtobe Ancient Settlement',
+        loc: 'Left bank of Syr Darya, Arys district',
+        category: 'Археология',
+        img: '../img/places/bairkumtobe.jpeg',
+        lead: 'Rectangular settlement (≈300×400 m), 1st c. BC – 8th c. AD; sedentary culture along Syr Darya.',
+        facts: [
+            'Walls of rammed earth ≈ 3 m high; several towers remain.',
+            'Citadel stands higher inside the plan.',
+            'Reservoir traces on NW and E sides.',
+            'First noted by O.A. Rudnev (1900); studied by A.N. Bernshtam’s team (1948–49).',
+            'Finds: clay pottery, jewelry, utensils, tools.'
+        ],
+        questions: [
+            {q: 'Where located?', a: ['Mangystau', 'Arys district', 'Almaty', 'Astana'], ok: 1},
+            {q: 'Period?', a: ['10–12 cc. AD', '5–15 cc. AD', '1 c. BC – 8 c. AD', '18–19 cc.'], ok: 2},
+            {
+                q: 'Who first described it (1900)?',
+                a: ['A.N. Bernshtam', 'O.A. Rudnev', 'K.I. Satpayev', 'Sh. Ualikhanov'],
+                ok: 1
+            },
+            {q: 'Plan shape?', a: ['Circular', 'Rectangular', 'Triangular', 'Oval'], ok: 1},
+            {q: 'Wall height?', a: ['10 m', '5 m', '≈3 m', '<1 m'], ok: 2}
+        ]
+    };
+</script>
+<script src="../js/place-page.js" defer></script>
+</body>
+</html>
